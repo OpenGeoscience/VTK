@@ -224,9 +224,9 @@ ENDIF(NOT HAVE_SIZEOF_PTRDIFF_T)
 TEST_BIG_ENDIAN(CMAKE_WORDS_BIGENDIAN)
 SET(WORDS_BIGENDIAN ${CMAKE_WORDS_BIGENDIAN})
 
-OPTION(NETCDF_ENABLE_CXX "Build netcdf C++ API" ON)
-mark_as_advanced(NETCDF_ENABLE_CXX)
-SET(CXX NETCDF_ENABLE_CXX)
+#OPTION(NETCDF_ENABLE_CXX "Build netcdf C++ API" ON)
+#mark_as_advanced(NETCDF_ENABLE_CXX)
+#SET(CXX NETCDF_ENABLE_CXX)
 
 # NetCDF4 needs HDF5 HL support. Check that's available.
 set (USE_NETCDF4 OFF)
@@ -319,10 +319,10 @@ IF (USE_NETCDF4)
   ADD_SUBDIRECTORY(libsrc4)
 ENDIF (USE_NETCDF4)
 
-IF (NETCDF_ENABLE_CXX)
-  set(netcdf_cxx_SOURCES "" CACHE INTERNAL "" FORCE)
-  ADD_SUBDIRECTORY(cxx)
-ENDIF (NETCDF_ENABLE_CXX)
+#IF (NETCDF_ENABLE_CXX)
+#  set(netcdf_cxx_SOURCES "" CACHE INTERNAL "" FORCE)
+#  ADD_SUBDIRECTORY(cxx)
+#ENDIF (NETCDF_ENABLE_CXX)
 
 IF(APPLE)
   SET_SOURCE_FILES_PROPERTIES(
@@ -343,9 +343,6 @@ if (UNIX)
   target_link_libraries(vtkNetCDF m)
 endif()
 
-VTK_ADD_LIBRARY(vtkNetCDF_cxx ${netcdf_cxx_SOURCES})
-TARGET_LINK_LIBRARIES(vtkNetCDF_cxx LINK_PUBLIC vtkNetCDF)
-
 #-----------------------------------------------------------------------------
 #package the result
 #-----------------------------------------------------------------------------
@@ -353,10 +350,7 @@ TARGET_LINK_LIBRARIES(vtkNetCDF_cxx LINK_PUBLIC vtkNetCDF)
 IF(NOT VTK_INSTALL_NO_DEVELOPMENT)
   INSTALL(FILES
     ${VTKNETCDF_SOURCE_DIR}/include/netcdf.h
-    ${VTKNETCDF_SOURCE_DIR}/include/vtk_netcdf_mangle.h
-    ${VTKNETCDF_SOURCE_DIR}/cxx/netcdf.hh
-    ${VTKNETCDF_SOURCE_DIR}/cxx/netcdfcpp.h
-    ${VTKNETCDF_SOURCE_DIR}/cxx/ncvalues.h
+    ${VTKNETCDF_SOURCE_DIR}/include/vtk_netcdf_mangle.h    
     ${VTKNETCDF_BINARY_DIR}/vtk_netcdf_config.h
     DESTINATION ${VTK_INSTALL_INCLUDE_DIR}/vtknetcdf/include
     COMPONENT Development)

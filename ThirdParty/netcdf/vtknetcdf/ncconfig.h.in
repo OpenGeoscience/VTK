@@ -4,7 +4,7 @@
 #define _NCCONFIG_H_
 
 #include "vtk_netcdf_config.h"
-#include "vtk_netcdf_mangle.h"
+#include "vtknetcdf/include/vtk_netcdf_mangle.h"
 
 /* Version number of package */
 #define PACKAGE_VERSION "@VERSION@"

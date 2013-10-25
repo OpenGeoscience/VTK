@@ -7,11 +7,14 @@
  *   $Header: /upc/share/CVS/netcdf-3/cxx/netcdf.cpp,v 1.18 2009/03/10 15:20:54 russ Exp $
  *********************************************************************/
 
-#include <config.h>
+#include <vtknetcdf/config.h>
+
+#include "netcdfcpp.h"
+
 #include <string.h>
 #include <stdlib.h>
 #include <iostream>
-#include "netcdfcpp.h"
+
 
 #ifndef TRUE
 #define TRUE 1
