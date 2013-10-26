@@ -14,8 +14,8 @@ endforeach(file ${SOURCES})
 
 set(netcdf_cxx_SOURCES ${path_SOURCES} CACHE INTERNAL "" FORCE)
 
-VTK_ADD_LIBRARY(vtkNetCDF_cxx ${netcdf_cxx_SOURCES})
-TARGET_LINK_LIBRARIES(vtkNetCDF_cxx LINK_PUBLIC vtkNetCDF)
+VTK_ADD_LIBRARY(vtkNetCDFCXX ${netcdf_cxx_SOURCES})
+TARGET_LINK_LIBRARIES(vtkNetCDFCXX LINK_PUBLIC vtkNetCDF)
 
 #-----------------------------------------------------------------------------
 #package the result

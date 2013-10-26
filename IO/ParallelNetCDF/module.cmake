@@ -5,7 +5,7 @@ vtk_module(vtkIOParallelNetCDF
     vtkCommonCore
     vtkParallelMPI
   COMPILE_DEPENDS
-    vtknetcdf
+    vtkNetCDF
   TEST_DEPENDS
     vtkCommonExecutionModel
     vtkRenderingOpenGL

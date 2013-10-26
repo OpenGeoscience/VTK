@@ -9,5 +9,5 @@ vtk_module(vtkIOMINC
     vtkIOImage
   PRIVATE_DEPENDS
     vtksys
-    vtknetcdf
+    vtkNetCDF
   )

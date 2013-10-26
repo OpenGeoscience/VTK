@@ -331,7 +331,7 @@ IF(APPLE)
     COMPILE_FLAGS -fno-common)
 ENDIF(APPLE)
 
-VTK_ADD_LIBRARY(vtkNetCDF 
+VTK_ADD_LIBRARY(vtkNetCDF
     ${netcdf_src_SOURCES}
     ${netcdf_src4_SOURCES}
     ${netcdf_dispatch_SOURCES}

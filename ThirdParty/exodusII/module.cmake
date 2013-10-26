@@ -1,5 +1,5 @@
 vtk_module(vtkexodusII
   DEPENDS
-    vtknetcdf
+    vtkNetCDF
   EXCLUDE_FROM_WRAPPING
   )

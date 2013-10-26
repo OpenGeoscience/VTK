@@ -2,15 +2,14 @@ vtk_module(vtkIONetCDF
   GROUPS
     StandAlone
   DEPENDS
-    vtknetcdf
     vtkCommonDataModel
     vtkCommonSystem
     vtkIOCore
+  COMPILE_DEPENDS
+    vtkNetCDF
+    vtkNetCDFCXX
   PRIVATE_DEPENDS
     vtksys
-  COMPILE_DEPENDS
-    vtknetcdf
-    vtknetcdfcxx
   TEST_DEPENDS
     vtkCommonExecutionModel
     vtkRenderingOpenGL

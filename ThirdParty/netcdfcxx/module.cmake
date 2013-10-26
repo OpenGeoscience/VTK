@@ -1,5 +1,5 @@
-vtk_module(vtknetcdfcxx
+vtk_module(vtkNetCDFCXX
    DEPENDS
     vtkhdf5
-    vtknetcdf
+    vtkNetCDF
    EXCLUDE_FROM_WRAPPING)
