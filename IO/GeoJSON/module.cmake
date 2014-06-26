@@ -8,4 +8,7 @@ vtk_module(vtkIOGeoJSON
 
   TEST_DEPENDS
     vtkTestingCore
+    vtkRenderingOpenGL
+    vtkTestingRendering
+    vtkInteractionStyle
   )

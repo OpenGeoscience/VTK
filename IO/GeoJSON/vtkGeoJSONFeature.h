@@ -21,9 +21,9 @@
 #define __vtkGeoJSONFeature_h
 
 // VTK Includes
-#include "vtkIOGeoJSONModule.h" // For export macro
 #include "vtkDataObject.h"
-#include "vtk_jsoncpp.h"
+#include "vtkIOGeoJSONModule.h" // For export macro
+#include "vtk_jsoncpp.h" // For json parser
 
 class vtkPolyData;
 class vtkStdString;
