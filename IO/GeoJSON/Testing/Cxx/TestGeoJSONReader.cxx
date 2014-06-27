@@ -27,10 +27,12 @@
 #include <vtkSmartPointer.h>
 #include <vtkTestUtilities.h>
 
+#include <fstream>
+
 // Main program
 int TestGeoJSONReader(int argc, char* argv[])
 {
-  const char* vectorFileName = vtkTestUtilities::ExpandDataFileName(argc, argv, "Data/GeoJSON/india.json");
+  const char* vectorFileName = vtkTestUtilities::ExpandDataFileName(argc, argv, "Data/india.json");
 
   // Create reader to read shape file.
   vtkNew<vtkGeoJSONReader> reader;
@@ -72,5 +74,5 @@ int TestGeoJSONReader(int argc, char* argv[])
     {
     renderWindowInteractor->Start();
     }
-  return retVal;
+  return !retVal;
 }

@@ -86,10 +86,10 @@ protected:
   // Jsoncpp root
   bool IsPoint(Json::Value root);
   bool IsMultiPoint(Json::Value root);
-  bool IsLineString(Json::Value root);  //To Do.
-  bool IsMultiLineString(Json::Value root); //To Do.
-  bool IsPolygon(Json::Value root); //To Do.
-  bool IsMultiPolygon(Json::Value root);  //To Do.
+  bool IsLineString(Json::Value root);
+  bool IsMultiLineString(Json::Value root);
+  bool IsPolygon(Json::Value root);
+  bool IsMultiPolygon(Json::Value root);
 
   // Description:
   // Point[] from its JSON equivalent
