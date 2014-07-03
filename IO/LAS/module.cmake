@@ -3,4 +3,8 @@ vtk_module(vtkIOLAS
     vtkCommonExecutionModel
     vtkFiltersGeneral
   TEST_DEPENDS
+    vtkTestingCore
+    vtkRenderingOpenGL
+    vtkTestingRendering
+    vtkInteractionStyle
 )
