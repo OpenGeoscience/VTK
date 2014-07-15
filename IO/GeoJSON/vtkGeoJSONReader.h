@@ -26,6 +26,7 @@
 #include "vtk_jsoncpp.h" // For json parser
 
 class vtkPolyData;
+class vtkStdString;
 
 class VTKIOGEOJSON_EXPORT vtkGeoJSONReader: public vtkPolyDataAlgorithm
 {
@@ -35,9 +36,24 @@ public:
   virtual void PrintSelf(ostream &os, vtkIndent indent);
 
   // Decription:
-  // Accessor for name of the file that will be opened on WriteData
+  // Accessor for name of the file to be read
   vtkSetStringMacro(FileName);
   vtkGetStringMacro(FileName);
+
+  // Decription:
+  // Accessor for string data
+  vtkSetMacro(StringData, vtkStdString);
+  vtkGetMacro(StringData, vtkStdString);
+
+  enum ReadSources{
+    ReadFromFile = 1,
+    ReadFromString = 2
+  };
+
+  // Decription:
+  // Accessor for string data
+  vtkSetMacro(Source, ReadSources);
+  vtkGetMacro(Source, ReadSources);
 
 protected:
   vtkGeoJSONReader();
@@ -55,9 +71,14 @@ protected:
   // Decription:
   // Verify if file exists and can be read by the parser
   // If exists, parse into Jsoncpp data structure
-  int CanParse(const char *filename, Json::Value &root);
+  int CanParse(Json::Value &root);
 
+  // Description:
+  // Case insensitive string comparison
+  bool IsEqual(vtkStdString str1, vtkStdString str2);
   char *FileName;
+  vtkStdString StringData;
+  ReadSources Source;
 
 private:
   vtkGeoJSONReader(const vtkGeoJSONReader&);  // Not implemented

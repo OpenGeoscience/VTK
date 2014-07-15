@@ -35,8 +35,10 @@ vtkStandardNewMacro(vtkGeoJSONReader);
 vtkGeoJSONReader::vtkGeoJSONReader()
 {
   this->FileName = NULL;
+  this->StringData = "";
   this->SetNumberOfInputPorts(0);
   this->SetNumberOfOutputPorts(1);
+  this->Source = ReadFromFile;
 }
 
 //----------------------------------------------------------------------------
@@ -46,21 +48,29 @@ vtkGeoJSONReader::~vtkGeoJSONReader()
 }
 
 //----------------------------------------------------------------------------
-int vtkGeoJSONReader::CanParse(const char *filename, Json::Value &root)
+int vtkGeoJSONReader::CanParse(Json::Value &root)
 {
-  ifstream file;
-  file.open( filename );
-
-  if ( ! file.is_open() )
-    {
-    vtkErrorMacro(<< "Unable to Open File " << this->FileName);
-    return VTK_ERROR;
-    }
-
   Json::Reader reader;
+  bool parsedSuccess = false;
 
-  //parse the entire geoJSON data into the Json::Value root
-  bool parsedSuccess = reader.parse(file, root, false);
+  if (Source == ReadFromFile)
+    {
+    ifstream file;
+    file.open( this->FileName );
+
+    if ( ! file.is_open() )
+      {
+      vtkErrorMacro(<< "Unable to Open File " << this->FileName);
+      return VTK_ERROR;
+      }
+
+    //parse the entire geoJSON data into the Json::Value root
+    parsedSuccess = reader.parse(file, root, false);
+    }
+  else if (Source == ReadFromString)
+    {
+      parsedSuccess = reader.parse(StringData, root, false);
+    }
 
   if ( ! parsedSuccess )
     {
@@ -84,7 +94,7 @@ int vtkGeoJSONReader::RequestData(vtkInformation* vtkNotUsed(request),
   vtkPolyData* output = vtkPolyData::SafeDownCast(outInfo->Get(vtkDataObject::DATA_OBJECT()));
 
   Json::Value root;
-  if ( CanParse(this->FileName, root) == VTK_ERROR )
+  if ( CanParse(root) == VTK_ERROR )
     {
     return VTK_ERROR;
     }
@@ -108,19 +118,27 @@ int vtkGeoJSONReader::RequestData(vtkInformation* vtkNotUsed(request),
 //----------------------------------------------------------------------------
 void vtkGeoJSONReader::ParseRoot(Json::Value root, vtkPolyData *output)
 {
+  output->SetPoints( vtkPoints::New() );//Initialising containers for points,
+  output->SetVerts( vtkCellArray::New() );//Vertices,
+  output->SetLines( vtkCellArray::New() );//Lines and
+  output->SetPolys( vtkCellArray::New() );//Polygons
+
   Json::Value rootType = root.get( "type", -1 );
   Json::Value rootFeatures = root.get( "features", -1 );
 
   if ( rootFeatures == -1 )
     {
-    vtkErrorMacro (<<"Parse Root :: Features :: -1");
+
+    // For specific cases if GeoJSON Data is not in standard format as specified here: http://www.geojson.org
+    // For PostGIS GeoJSON Output follows the example
+    vtkGeoJSONFeature *feature = vtkGeoJSONFeature::New();
+    if(feature->ExtractGeoJSONFeatureGeometry(root, output)) // Data in GeoJSON format as specified by PostGIS
+      return;
+
+    // No match to any GeoJSON format
+    vtkErrorMacro (<<"Error parsing root");
     return;
     }
-
-  output->SetPoints( vtkPoints::New() );//Initialising containers for points,
-  output->SetVerts( vtkCellArray::New() );//Vertices,
-  output->SetLines( vtkCellArray::New() );//Lines and
-  output->SetPolys( vtkCellArray::New() );//Polygons
 
   if ( rootFeatures.isArray() )
     {

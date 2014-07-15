@@ -292,7 +292,7 @@ void vtkGeoJSONFeature::ExtractGeoJSONFeature(Json::Value root, vtkPolyData *out
 }
 
 //----------------------------------------------------------------------------
-void vtkGeoJSONFeature::ExtractGeoJSONFeatureGeometry(Json::Value root, vtkPolyData *outputData)
+bool vtkGeoJSONFeature::ExtractGeoJSONFeatureGeometry(Json::Value root, vtkPolyData *outputData)
 {
 
   Json::Value type = root.get("type", -1);
@@ -344,13 +344,17 @@ void vtkGeoJSONFeature::ExtractGeoJSONFeatureGeometry(Json::Value root, vtkPolyD
       else
         {
         vtkErrorMacro (<< "This geometry ("<< typeString << ") has not been implemented yet");
+        return false;
         }
       }
     }
   else
     {
     vtkErrorMacro (<< "Unknow data entry for \"type\" at " << root);
+    return false;
     }
+
+  return true;
 }
 
 //----------------------------------------------------------------------------
